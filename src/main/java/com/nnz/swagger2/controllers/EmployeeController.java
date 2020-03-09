@@ -61,9 +61,11 @@ public class EmployeeController {
 
 	@ApiOperation(value = "Update an employee")
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateEmployee( @ApiParam(value = "Employee Id to update employee object", required = true) @PathVariable(value = "id") Long employeeId,
-	        @ApiParam(value = "Update employee object", required = true) @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
-		
+	public ResponseEntity<Employee> updateEmployee(
+			@ApiParam(value = "Employee Id to update employee object", required = true) @PathVariable(value = "id") Long employeeId,
+			@ApiParam(value = "Update employee object", required = true) @Valid @RequestBody Employee employeeDetails)
+			throws ResourceNotFoundException {
+
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 		employee.setEmailId(employeeDetails.getEmailId());
@@ -72,10 +74,11 @@ public class EmployeeController {
 		final Employee updatedEmployee = employeeRepository.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}
-	
+
 	@ApiOperation(value = "Delete an employee")
 	@DeleteMapping("/employees/{id}")
-	public Map<String, Boolean> deleteEmployee( @ApiParam(value = "Employee Id from which employee object will delete from database table", required = true) @PathVariable(value = "id") Long employeeId)
+	public Map<String, Boolean> deleteEmployee(
+			@ApiParam(value = "Employee Id from which employee object will delete from database table", required = true) @PathVariable(value = "id") Long employeeId)
 			throws ResourceNotFoundException {
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
